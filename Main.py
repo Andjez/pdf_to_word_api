@@ -7,7 +7,15 @@ def pdf_to_docx(pdf_path, docx_path):
     cv = Converter(pdf_path)
     cv.convert(docx_path, start=0, end=None)
     cv.close()
-
+# Function to create a download link for files
+def get_binary_file_downloader_html(file_path, file_label='File'):
+    with open(file_path, 'rb') as file:
+        data = file.read()
+    bin_str = data
+    bin_str = bin_str.decode('latin1')
+    href = f'<a href="data:application/octet-stream;base64,{bin_str}" download="{file_label}.docx">Download {file_label}</a>'
+    return href
+    
 # Streamlit UI
 st.title("PDF to Word Converter")
 
@@ -36,12 +44,3 @@ if uploaded_file is not None:
 
         # Remove temporary Word file after download
         os.remove(temp_docx_path)
-
-# Function to create a download link for files
-def get_binary_file_downloader_html(file_path, file_label='File'):
-    with open(file_path, 'rb') as file:
-        data = file.read()
-    bin_str = data
-    bin_str = bin_str.decode('latin1')
-    href = f'<a href="data:application/octet-stream;base64,{bin_str}" download="{file_label}.docx">Download {file_label}</a>'
-    return href
