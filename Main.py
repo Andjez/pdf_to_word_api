@@ -3,9 +3,24 @@ from pdf2docx import Converter
 import pikepdf
 import os
 
+#def pdf_to_docx(pdf_path, docx_path):
+#    cv = Converter(pdf_path)
+#    cv.convert(docx_path, start=0, end=None)
+#    cv.close()
+
+
 def pdf_to_docx(pdf_path, docx_path):
     cv = Converter(pdf_path)
-    cv.convert(docx_path, start=0, end=None)
+    total_pages = cv.num_pages
+    progress_bar = st.progress(0)
+
+    for page_num in range(total_pages):
+        # Convert each page
+        cv.convert(docx_path, start=page_num, end=page_num + 1)
+
+        # Update progress bar
+        progress_bar.progress((page_num + 1) / total_pages)
+
     cv.close()
 # Function to create a download link for files
 def get_binary_file_downloader_html(file_path, file_label='File'):
