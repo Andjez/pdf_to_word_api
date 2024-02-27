@@ -8,21 +8,11 @@ import os
 #    cv.convert(docx_path, start=0, end=None)
 #    cv.close()
 
-
 def pdf_to_docx(pdf_path, docx_path):
     cv = Converter(pdf_path)
-    with pikepdf.open(pdf_path) as pdf:
-        total_pages = len(pdf.pages)
-    progress_bar = st.progress(0)
-
-    for page_num in range(total_pages):
-        # Convert each page
-        cv.convert(docx_path, start=page_num, end=page_num + 1)
-
-        # Update progress bar
-        progress_bar.progress((page_num + 1) / total_pages)
-    
+    cv.convert(docx_path)      # all pages by default
     cv.close()
+    
     with open(docx_path, 'rb') as f:
         st.download_button('Download Docx', f, file_name=docx_path)
 
