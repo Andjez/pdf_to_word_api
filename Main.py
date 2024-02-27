@@ -21,16 +21,9 @@ def pdf_to_docx(pdf_path, docx_path):
 
         # Update progress bar
         progress_bar.progress((page_num + 1) / total_pages)
-
+    
     cv.close()
-# Function to create a download link for files
-def get_binary_file_downloader_html(file_path, file_label='File'):
-    with open(file_path, 'rb') as file:
-        data = file.read()
-    
-    st.download_button('Download Word',data)
-    return 
-    
+    st.download_button('Download Word',docx_path)
 # Streamlit UI
 st.title("PDF to Word Converter")
 
@@ -52,10 +45,6 @@ if uploaded_file is not None:
         # Temporary path for converted Word file
         temp_docx_path = "converted_docx.docx"
         pdf_to_docx(filename, temp_docx_path)
-
-        # Display download button
-        st.subheader("Download Converted Word File:")
-        st.markdown(get_binary_file_downloader_html("converted_docx.docx", "Word file"))#, unsafe_allow_html=True)
 
         # Remove temporary Word file after download
         os.remove(temp_docx_path)
