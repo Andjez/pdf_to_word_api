@@ -1,7 +1,9 @@
-import streamlit as st
+# main_api.py
+
 from flask import Flask, request, send_file
-from pdf2docx import Converter
+import threading
 import os
+from pdf2docx import Converter
 
 app = Flask(__name__)
 
@@ -20,11 +22,12 @@ def convert_pdf_to_docx():
     return send_file(docx_path, as_attachment=True)
 
 if __name__ == '__main__':
-    # Run Streamlit app in the background
-    st_process = st._create_process('streamlit run --server.port 8501 Main_api.py', 'global')
+    # Run Flask app in a separate thread
+    flask_thread = threading.Thread(target=app.run, kwargs={'port': 5000, 'host': '0.0.0.0'})
+    flask_thread.start()
 
-    # Run Flask app
-    app.run(port=5000, host='0.0.0.0')  # Allow external access
+    # Run Streamlit app in the main thread
+    os.system('streamlit run Main_api.py')
 
-    # Close Streamlit app when Flask app exits
-    st_process.terminate()
+    # Wait for Flask thread to finish
+    flask_thread.join()
