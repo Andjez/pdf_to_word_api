@@ -19,8 +19,8 @@ if uploaded_file is not None:
     pdf = pikepdf.open(uploaded_file)
     pdf.save(uploaded_file.name)
     filename = uploaded_file.name
-    st.subheader("Uploaded PDF Preview:")
-    st.pdf(filename)
+    #st.subheader("Uploaded PDF Preview:")
+    #st.pdf(filename)
 
     # Convert PDF to Word
     convert_button = st.button("Convert to Word")
