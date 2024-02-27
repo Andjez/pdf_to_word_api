@@ -9,6 +9,7 @@ import os
 #    cv.close()
 
 def pdf_to_docx(pdf_path, docx_path):
+    st.markdown("Converting.. Please wait..") 
     cv = Converter(pdf_path)
     cv.convert(docx_path)      # all pages by default
     cv.close()
