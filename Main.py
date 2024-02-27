@@ -23,7 +23,11 @@ def pdf_to_docx(pdf_path, docx_path):
         progress_bar.progress((page_num + 1) / total_pages)
     
     cv.close()
-    st.download_button('Download Word',docx_path)
+    import io
+    bio = io.BytesIO()
+    docx_path.save(bio)
+    st.download_button(label="Download Docx",data=bio.getvalue(),file_name=docx_path,mime="docx")
+
 # Streamlit UI
 st.title("PDF to Word Converter")
 
