@@ -11,7 +11,8 @@ import os
 
 def pdf_to_docx(pdf_path, docx_path):
     cv = Converter(pdf_path)
-    total_pages = cv.num_pages
+    with pikepdf.open(pdf_path) as pdf:
+        total_pages = len(pdf.pages)
     progress_bar = st.progress(0)
 
     for page_num in range(total_pages):
