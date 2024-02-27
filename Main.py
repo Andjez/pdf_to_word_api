@@ -23,8 +23,8 @@ def pdf_to_docx(pdf_path, docx_path):
         progress_bar.progress((page_num + 1) / total_pages)
     
     cv.close()
-   with open(docx_path, 'rb') as f:
-       st.download_button('Download Docx', f, file_name=docx_path)
+    with open(docx_path, 'rb') as f:
+        st.download_button('Download Docx', f, file_name=docx_path)
 
 # Streamlit UI
 st.title("PDF to Word Converter")
