@@ -23,9 +23,8 @@ def pdf_to_docx(pdf_path, docx_path):
         progress_bar.progress((page_num + 1) / total_pages)
     
     cv.close()
-    import io
-    bio = io.BytesIO()
-    st.download_button(label="Download Docx",data=bio.getvalue(),file_name=docx_path,mime="docx")
+   with open(docx_path, 'rb') as f:
+       st.download_button('Download Docx', f, file_name=docx_path)
 
 # Streamlit UI
 st.title("PDF to Word Converter")
@@ -46,7 +45,7 @@ if uploaded_file is not None:
 
     if convert_button:
         # Temporary path for converted Word file
-        temp_docx_path = "converted_docx.docx"
+        temp_docx_path = f"{filename}.docx"
         pdf_to_docx(filename, temp_docx_path)
 
         # Remove temporary Word file after download
